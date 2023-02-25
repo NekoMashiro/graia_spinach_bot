@@ -447,6 +447,25 @@ files = [
 ]
 
 [[package]]
+name = "graia-saya"
+version = "0.0.17"
+description = ""
+category = "main"
+optional = false
+python-versions = ">=3.7,<4.0"
+files = [
+    {file = "graia_saya-0.0.17-py3-none-any.whl", hash = "sha256:d286edd2cc5955c588bb515bdaeadda5fbbf6a60341e0db79772a3181b393e8a"},
+    {file = "graia_saya-0.0.17.tar.gz", hash = "sha256:3d093b9a63733483b57ae677e9e70dfd2b7a12931ca554625cdaf04a34e4f3b2"},
+]
+
+[package.dependencies]
+loguru = ">=0.5.3,<0.7"
+
+[package.extras]
+broadcast = ["graia-broadcast (>=0.12.1)"]
+scheduler = ["graia-scheduler (>=0.0.8,<0.0.9)"]
+
+[[package]]
 name = "idna"
 version = "3.4"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -811,4 +830,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "be7c6f60312755b30da55ab9abbc2bb2014ed533711fcaaaf7007b96a9044064"
+content-hash = "82f2254ec3778269f8e0d0d17263afc774f8f41eb853c5c41d2f14f09ce71030"

@@ -1,31 +1,27 @@
+import pkgutil
+
 from creart import create
 from graia.ariadne.app import Ariadne
 from graia.ariadne.connection.config import (
-    HttpClientConfig,
-    WebsocketClientConfig,
     config,
 )
-from graia.ariadne.event.message import FriendMessage
-from graia.ariadne.message.chain import MessageChain
-from graia.ariadne.model import Friend
 from graia.broadcast import Broadcast
+from graia.saya import Saya
 
-bcc = create(Broadcast)
-app = Ariadne(
-    connection=config(
-        0,  # qq号，好孩子不可以看
-        ""  # 密码，好孩子不可以看
-    ),
-)
-
-
-@bcc.receiver(FriendMessage)
-async def setu(app: Ariadne, friend: Friend, message: MessageChain):
-    if message.display == "你好":
-        await app.send_message(
-            friend,
-            MessageChain(f"不要说{message.display}，来点涩图"),
-        )
-
-
-app.launch_blocking()
+if __name__ == '__main__':
+    # 机器人init
+    app = Ariadne(
+        connection=config(
+            0,  # qq号，好孩子不可以看
+            ""  # 密码，好孩子不可以看
+        ),
+    )
+    # 引入所有模块
+    saya = create(Saya)
+    with saya.module_context():
+        for module_info in pkgutil.iter_modules(["modules"]):
+            if module_info.name.startswith("_"):
+                continue
+            saya.require(f"modules.{module_info.name}")
+    # 启动！
+    app.launch_blocking()
