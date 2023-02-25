@@ -10,8 +10,15 @@ packages = [{include = "graia_spinach_bot"}]
 python = "^3.9"
 graia-ariadne = "^0.11.0"
 graia-saya = "^0.0.17"
+pynput = "^1.7.6"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[[tool.poetry.source]]
+# 这里以清华源举例，你也可以使用其他源
+name = "tuna-tsinghua"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+default = true
