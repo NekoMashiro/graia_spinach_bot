@@ -38,9 +38,9 @@ class HandCardInfo:
     def is_blackJack(self) -> bool:
         if len(self.pokerlist) != 2:
             return False
-        if self.pokerlist[0].blackJackPoint == 1 and self.pokerlist[1] == 10:
+        if self.pokerlist[0].blackJackPoint() == 1 and self.pokerlist[1] == 10:
             return True
-        if self.pokerlist[0].blackJackPoint == 10 and self.pokerlist[1] == 1:
+        if self.pokerlist[0].blackJackPoint() == 10 and self.pokerlist[1] == 1:
             return True
         return False
     
@@ -53,7 +53,7 @@ class HandCardInfo:
             if (value == 1):
                 hasA = True
         if hasA and totalValue <= 11:
-            totalValue += 11
+            totalValue += 10
         return totalValue
             
     def gameScore(self) -> int:

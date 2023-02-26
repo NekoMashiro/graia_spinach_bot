@@ -15,7 +15,7 @@ async def sendStartGameFailMessage(groupId: str, playerId: str):
     groupInfo = await BotUtils().getBot().get_group(int(groupId))
     await BotUtils().getBot().send_message(
         groupInfo,
-        MessageChain([At(playerId), " 已经有游戏在进行啦！"]),
+        MessageChain([At(int(playerId)), " 已经有游戏在进行啦！"]),
     )
 
 async def sendJoinSuccessMessage(groupId: str, playerId: str, cardInfo: HandCardInfo):
@@ -39,6 +39,8 @@ async def sendJoinFailMessage(groupId: str, playerId: str, reason: str):
         fail = "你已经在游戏里了哦，轮到你的时候才可以进行操作～"
     elif fail == "no_seat":
         fail = "已经没有位置啦～"
+    elif fail == "game_end":
+        fail = "游戏正在结束阶段，麻烦下局再来吧～"
     await BotUtils().getBot().send_message(
         groupInfo,
         MessageChain([At(int(playerId)), " 加入失败，", fail]),

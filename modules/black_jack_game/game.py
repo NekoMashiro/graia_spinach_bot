@@ -17,21 +17,24 @@ class BlackJackGame:
         # 超时相关
         self.seq = 0
         self.lock = Lock()
+        self.isFinish = False
 
     def hideHostState(self) -> str:
         return f"菜菜的第一张牌是{self.hostInfo.pokerlist[0].toString()}，第二张牌会在游戏结束前不会展示～"
 
-    def addPlayer(self, playerId) -> str:
+    def addPlayer(self, playerId):
         if playerId in self.playerList:
-            return None, "has_joined"
+            return "has_joined", None
         if len(self.playerList) == 6:
-            return None, "no_seat"
+            return "no_seat", None
+        if self.isFinish:
+            return "game_end", None
         self.playerList.append(playerId)
         playerHandInfo = HandCardInfo()
         playerHandInfo.pokerlist.append(self.deck.draw())
         playerHandInfo.pokerlist.append(self.deck.draw())
         self.playerInfo[playerId] = playerHandInfo
-        return ""
+        return "", playerHandInfo
     
     async def nextPlayerTurn(self):
         if self.current_player == "":
@@ -45,6 +48,7 @@ class BlackJackGame:
                         return
                     else:
                         self.current_player = self.playerList[i + 1]
+                        break
         await sendPlayerTurnMessage(self.groupId, self.current_player, self.playerInfo.get(self.current_player))
         self.seq += 1
         asyncio.create_task(self.createTimeout(self.seq, self.current_player))
@@ -86,6 +90,7 @@ class BlackJackGame:
         await self.nextPlayerTurn()
 
     async def gameEnd(self):
+        self.isFinish = True
         # 庄家要牌流程
         text = f"所有人的回合都结束啦，菜菜的另一张卡是【{self.hostInfo.pokerlist[1].toString()}】！加上之前的【{self.hostInfo.pokerlist[0].toString()}】，{self.hostInfo.totalValueStr()}\n"
         while self.hostInfo.gameScore() < 17 and self.hostInfo.gameScore() > 0:

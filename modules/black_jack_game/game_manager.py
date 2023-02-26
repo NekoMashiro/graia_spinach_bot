@@ -20,9 +20,9 @@ class BlackJackGameManager:
         await game.nextPlayerTurn()
 
     async def joinGame(self, groupId: str, playerId: str):
-        result = await self.groupGameDict.get(groupId).addPlayer(playerId)
+        result, cardInfo = self.groupGameDict.get(groupId).addPlayer(playerId)
         if (result == ""):
-            await sendJoinSuccessMessage(groupId, playerId)
+            await sendJoinSuccessMessage(groupId, playerId, cardInfo)
         else:
             await sendJoinFailMessage(groupId, playerId, result)
 
