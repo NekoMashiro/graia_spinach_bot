@@ -14,5 +14,5 @@ async def setu(app: Ariadne, friend: Friend, message: MessageChain):
     if message.display == "你好":
          await app.send_message(
             friend,
-            MessageChain(f"不要说{message.display}，来点涩图"),
+            MessageChain(f"不要说{message.display}，来点{app.default_account}"),
          )
