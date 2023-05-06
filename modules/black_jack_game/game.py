@@ -13,11 +13,12 @@ class BlackJackGame:
         self.current_player = ""
         self.hostInfo.pokerlist.append(self.deck.draw())
         self.hostInfo.pokerlist.append(self.deck.draw())
-        self.addPlayer(firstPlayerId)
         # 超时相关
         self.seq = 0
         self.lock = Lock()
         self.isFinish = False
+
+        self.addPlayer(firstPlayerId)
 
     def hideHostState(self) -> str:
         return f"菜菜的第一张牌是{self.hostInfo.pokerlist[0].toString()}，第二张牌会在游戏结束前不会展示～"
